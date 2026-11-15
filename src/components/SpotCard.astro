@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { googleMapsUrl, checkedOn, checkedLabel, type Spot } from '../data/spots';
+
+interface Props { spot: Spot }
+const { spot } = Astro.props;
+const imageWidths = spot.image
+  ? [...new Set([360, 640, 960, Math.min(spot.image.width, 960)])].filter(width => width <= spot.image!.width).sort((a, b) => a - b)
+  : [];
+---
+<article
+  id={spot.id}
+  class="spot-card"
+  data-spot
+  data-category={spot.category}
+  data-search={`${spot.name} ${spot.area} ${spot.habitat}`.toLocaleLowerCase('en-IN')}
+  aria-labelledby={`${spot.id}-title`}
+>
+  <div class:list={['card-image', { 'card-image-placeholder': !spot.image }]}>
+    {spot.image ? <Image src={spot.image} alt={spot.imageAlt ?? spot.name} widths={imageWidths} sizes="(max-width: 639px) calc(100vw - 56px), (max-width: 999px) 44vw, 350px" width={spot.image.width} height={spot.image.height} format="webp" loading="lazy" style={`object-position: ${spot.imagePosition ?? 'center'}`} /> : <div class="placeholder-art"><Icon name={spot.category === 'lake' ? 'water' : 'leaf'} size={62} /><span>Location photo coming soon</span><small>Illustration, not a photograph</small></div>}
+    <span class="habitat-label"><Icon name={spot.category === 'lake' ? 'water' : 'leaf'} size={15} />{spot.habitat}</span>
+    {spot.closure && <span class="closure-note">{spot.closure}</span>}
+  </div>
+  <div class="card-body">
+    <p class="card-area"><Icon name="pin" size={14} />{spot.area}</p>
+    <h3 id={`${spot.id}-title`}>{spot.name}</h3>
+    <p class="card-description">{spot.description}</p>
+    <a class="map-button pressable" href={googleMapsUrl(spot.mapCoordinates)} target="_blank" rel="noopener noreferrer" aria-label={`Open in Google Maps — ${spot.name} (opens a new tab)`}>
+      <Icon name="pin" size={18} /><span>Open in Google Maps</span><Icon name="external" size={19} />
+    </a>
+    <details class="spot-details">
+      <summary>More details <Icon name="plus" size={19} /></summary>
+      <div class="details-body">
+        <h4>{spot.birds.length ? 'Birds recorded nearby' : 'Birding notes'}</h4>
+        {spot.birds.length > 0 && <p class="bird-names">{spot.birds.join(', ')}</p>}
+        <p>{spot.birdNote}</p>
+        <h4>Before you go</h4>
+        <p>{spot.access}</p>
+        <p><strong>Map pin:</strong> {spot.mapLabel}.</p>
+        <h4>{spot.image ? 'Sources & photo' : 'Location source'}</h4>
+        <ul>{spot.sources.map(source => <li><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label}<span class="sr-only"> (opens a new tab)</span></a></li>)}</ul>
+        {spot.photo && <p class="photo-credit"><a href={spot.photo.url} target="_blank" rel="noopener noreferrer">Photo by {spot.photo.author}</a> · <a href={spot.photo.licenseUrl} target="_blank" rel="noopener noreferrer">{spot.photo.license}</a>. Resized and cropped for display under the linked license.</p>}
+        {spot.photoNote && <p class="photo-credit">{spot.photoNote}</p>}
+        <p class="checked-date">Sources checked <time datetime={checkedOn}>{checkedLabel}</time>. Not an on-site access inspection.</p>
+      </div>
+    </details>
+  </div>
+</article>
