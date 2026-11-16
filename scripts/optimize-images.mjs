@@ -10,6 +10,7 @@ await mkdir(originals, { recursive: true });
 
 // Keep original uploads outside the deployed assets. Match each card's focal point.
 const photos = [
+  { name: 'roop-sagar', file: 'roop-sagar.png', y: 0.65 },
   { name: 'fateh-sagar', file: 'fateh-sagar.jpg', y: 0.5 },
   { name: 'gulab-bagh', file: 'gulab-bagh.jpg', y: 0.52 },
   { name: 'jogi-talab', file: 'jogi-talab.png', y: 0.45 },

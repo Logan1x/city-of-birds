@@ -3,13 +3,18 @@ import AxeBuilder from '@axe-core/playwright';
 
 test.beforeEach(async ({ page }) => { await page.goto('/'); });
 
-test('shows eight spots and functional map destinations', async ({ page }) => {
+test('shows nine spots and functional map destinations', async ({ page }) => {
   await expect(page).toHaveTitle(/City of Birds/);
-  await expect(page.locator('[data-spot]:visible')).toHaveCount(8);
+  await expect(page.locator('[data-spot]:visible')).toHaveCount(9);
   const maps = page.locator('.map-button');
-  await expect(maps).toHaveCount(8);
+  await expect(maps).toHaveCount(9);
   for (const link of await maps.all()) {
     const url = new URL((await link.getAttribute('href'))!);
+    if (url.hostname === 'maps.app.goo.gl') {
+      expect(url.href).toBe('https://maps.app.goo.gl/ZnQGr5wXia8hKuvT8');
+      await expect(link).toHaveAttribute('target', '_blank');
+      continue;
+    }
     expect(url.origin).toBe('https://www.google.com');
     expect(url.pathname).toBe('/maps/search/');
     expect(url.searchParams.get('api')).toBe('1');
@@ -30,6 +35,9 @@ test('shows eight spots and functional map destinations', async ({ page }) => {
     expect(url.searchParams.get('query')).toBe(coordinates);
   }
   await expect(page.locator('.card-image-placeholder')).toHaveCount(0);
+  await expect(page.locator('#roop-sagar h3')).toHaveText('Roop Sagar');
+  await expect(page.locator('#roop-sagar .card-image img')).toHaveAttribute('alt', /Roop Sagar lake.*palm tree/);
+  await expect(page.locator('#roop-sagar .map-button')).toHaveAttribute('href', 'https://maps.app.goo.gl/ZnQGr5wXia8hKuvT8');
   await expect(page.locator('#jogi-talab .card-image img')).toHaveAttribute('alt', /Palm trees.*Jogi Talab/);
   await expect(page.locator('#nela-talab .card-image img')).toHaveAttribute('alt', /promenade.*Nela Talab/);
   await expect(page.locator('#jungle-safari-park .card-image img')).toHaveAttribute('alt', /pavilion.*Jungle Safari Park/);
@@ -48,7 +56,7 @@ test('shows eight spots and functional map destinations', async ({ page }) => {
 
 test('combines filters and case-insensitive trimmed search; clear restores all', async ({ page }) => {
   await page.getByRole('button', { name: 'Lakes & wetlands', exact: true }).click();
-  await expect(page.locator('[data-spot]:visible')).toHaveCount(5);
+  await expect(page.locator('[data-spot]:visible')).toHaveCount(6);
   await page.getByRole('searchbox').fill('  GANGAUR  ');
   await expect(page.locator('[data-spot]:visible')).toHaveCount(1);
   await expect(page.locator('#result-count')).toHaveText('1 spot found');
@@ -56,7 +64,7 @@ test('combines filters and case-insensitive trimmed search; clear restores all',
   await expect(page.locator('#empty-state')).toBeVisible();
   await expect(page.locator('[data-spot]:visible')).toHaveCount(0);
   await page.getByRole('button', { name: 'Clear filters', exact: true }).click();
-  await expect(page.locator('[data-spot]:visible')).toHaveCount(8);
+  await expect(page.locator('[data-spot]:visible')).toHaveCount(9);
   await expect(page.getByRole('searchbox')).toBeFocused();
   await expect(page.getByRole('button', { name: 'All spots', exact: true })).toHaveAttribute('aria-pressed', 'true');
 });
@@ -96,8 +104,8 @@ test('has no horizontal overflow, missing photos, or browser errors', async ({ p
   expect(errors).toEqual([]);
 });
 
-test('serves all nine photographs as actual WebP images', async ({ page }) => {
-  await expect(page.locator('img')).toHaveCount(9);
+test('serves all ten photographs as actual WebP images', async ({ page }) => {
+  await expect(page.locator('img')).toHaveCount(10);
   for (const image of await page.locator('img').all()) {
     await image.scrollIntoViewIfNeeded();
     await image.evaluate(element => (element as HTMLImageElement).decode());
@@ -122,7 +130,7 @@ test('retains the full useful guide with JavaScript disabled', async ({ browser,
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto(baseURL!);
-  await expect(page.locator('[data-spot]')).toHaveCount(8);
+  await expect(page.locator('[data-spot]')).toHaveCount(9);
   await expect(page.locator('#discovery-controls')).toBeHidden();
   await page.locator('#pichola summary').click();
   await expect(page.locator('#pichola details')).toHaveAttribute('open', '');

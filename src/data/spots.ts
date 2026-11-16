@@ -7,6 +7,7 @@ import udaanPark from '../assets/udaan-park.webp';
 import jungleSafariPark from '../assets/jungle-safari-park.webp';
 import nelaTalab from '../assets/nela-talab.webp';
 import jogiTalab from '../assets/jogi-talab.webp';
+import roopSagar from '../assets/roop-sagar.webp';
 
 export const checkedOn = '2026-11-15';
 export const checkedLabel = '15 November 2026';
@@ -22,7 +23,7 @@ export interface PhotoCredit extends Source {
   licenseUrl: string;
 }
 
-export interface Spot {
+export type Spot = {
   id: string;
   name: string;
   area: string;
@@ -37,13 +38,15 @@ export interface Spot {
   imagePosition?: string;
   photo?: PhotoCredit;
   photoNote?: string;
-  mapCoordinates: `${number},${number}`;
   mapLabel: string;
   access: string;
   birdNote: string;
   birds: string[];
   sources: Source[];
-}
+} & (
+  | { mapCoordinates: `${number},${number}`; mapUrl?: never }
+  | { mapUrl: string; mapCoordinates?: never }
+);
 
 export const heroPhoto: PhotoCredit = {
   label: 'Purple sunbird, Udaipur',
@@ -56,6 +59,25 @@ export const heroPhoto: PhotoCredit = {
 const tourism = 'https://www.tourism.rajasthan.gov.in/udaipur.html';
 
 export const spots: Spot[] = [
+  {
+    id: 'roop-sagar',
+    name: 'Roop Sagar',
+    area: 'Udaipur · Roop Sagar',
+    category: 'lake',
+    habitat: 'Lakes & wetlands',
+    description: 'A lakeside stop to add to your Udaipur birding plans. Use the shared map link and watch from a safe, permitted spot on shore.',
+    time: 'Daylight, after checking access',
+    season: 'Check water & access conditions',
+    image: roopSagar,
+    imageAlt: 'Roop Sagar lake framed by a palm tree and a brick wall, with buildings and low hills across the water',
+    photoNote: 'Image supplied by the site owner. Original photographer and reuse licence were not specified.',
+    mapUrl: 'https://maps.app.goo.gl/ZnQGr5wXia8hKuvT8',
+    mapLabel: 'Roop Sagar · owner-shared Google Maps link; coordinates not independently checked',
+    access: 'The guide uses the location link supplied by its owner. The exact entrance, shoreline access, opening hours, and parking have not been checked. Confirm access locally, respect private land, and stay back from wet or unstable banks.',
+    birds: [],
+    birdNote: 'Suggested by the guide’s owner. A location-specific wild-bird checklist has not yet been verified; no particular sighting is promised.',
+    sources: [{ label: 'Shared Google Maps location · Roop Sagar', url: 'https://maps.app.goo.gl/ZnQGr5wXia8hKuvT8' }],
+  },
   {
     id: 'jungle-safari-park',
     name: 'Jungle Safari Park',
@@ -257,7 +279,7 @@ export const spots: Spot[] = [
   },
 ];
 
-export function googleMapsUrl(coordinates: Spot['mapCoordinates']): string {
+export function googleMapsUrl(coordinates: NonNullable<Spot['mapCoordinates']>): string {
   const url = new URL('https://www.google.com/maps/search/');
   url.searchParams.set('api', '1');
   url.searchParams.set('query', coordinates);

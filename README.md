@@ -37,7 +37,7 @@ Cards remain readable, expandable, and linked to Maps without JavaScript. Search
 
 ## Content status
 
-The collection has eight spots: Jungle Safari Park, Udaan Park, Menar Wetland Complex, Nela Talab, Jogi Talab, Fateh Sagar, Lake Pichola, and Gulab Bagh. The five additions were supplied as Google Maps links by the user; the original short URLs remain in each card’s sources, and coordinates come from the resolved place marker (`!3d` / `!4d`), not the map viewport center. Menar is explicitly labelled as outside Udaipur city.
+The collection has nine spots: Roop Sagar, Jungle Safari Park, Udaan Park, Menar Wetland Complex, Nela Talab, Jogi Talab, Fateh Sagar, Lake Pichola, and Gulab Bagh. Roop Sagar uses the owner-shared Google Maps URL directly: the redirect could not be reached during this update, so no coordinates or inspected entrance are asserted. Its owner-supplied photo shows the lake framed by a palm tree and brick wall; the original photographer and reuse licence were not specified. The earlier five additions retain their original shared URLs in their sources; their coordinates come from the resolved place marker (`!3d` / `!4d`), not the map viewport center. Menar is explicitly labelled as outside Udaipur city.
 
 Menar has a CC BY photograph of a spoonbill recorded at Menar Lake, credited to Mathieu Soetens. Udaan Park uses the portrait photo supplied by the user in chat (originally JPEG despite the attachment’s `.png` name); its original photographer and reuse licence were not specified, so no CC licence is asserted. Original files are preserved in `originals/`; active images are cropped and optimized WebP copies in `src/assets/`.
 
@@ -45,7 +45,7 @@ Jungle Safari Park uses the user-supplied landscape photo of its pavilion, lawn,
 
 Nela Talab uses the user-supplied portrait photo of its lakeside promenade, railings, and hills; the original photographer and reuse licence were not specified. The crop prioritises the promenade and water rather than the bright sky.
 
-Jogi Talab uses the user-supplied square image of palm trees reflected in the lake; the original photographer and reuse licence were not specified. All eight spot cards now have location photos. Labelled illustration fallback support remains available for future entries without images.
+Jogi Talab uses the user-supplied square image of palm trees reflected in the lake; the original photographer and reuse licence were not specified. All nine spot cards have location photos.
 
 The five additions do not have verified species checklists or entrance inspections; the cards say so. The original three cards cite community observations covering the broader habitat, not guaranteed sightings at their pins. Suggested-time and season rows were removed from every card at the user’s request. The Sunday closure is a compact photo badge, not a separate row.
 
@@ -66,6 +66,7 @@ Do not add sensitive nesting coordinates, captive birds as wild sightings, unver
 | `src/assets/jungle-safari-park.webp` | User-supplied Jungle Safari Park photo | Original photographer and reuse licence not specified; do not infer a Creative Commons licence |
 | `src/assets/nela-talab.webp` | User-supplied Nela Talab photo | Original photographer and reuse licence not specified; do not infer a Creative Commons licence |
 | `src/assets/jogi-talab.webp` | User-supplied Jogi Talab photo | Original photographer and reuse licence not specified; do not infer a Creative Commons licence |
+| `src/assets/roop-sagar.webp` | User-supplied Roop Sagar photo | Original photographer and reuse licence not specified; do not infer a Creative Commons licence |
 
 Photos are resized, compressed, and cropped for display under their respective licenses. ShareAlike applies to the images carrying that condition; the Menar image is CC BY. Attribution is also available in the page. Images show the named lake or garden, not necessarily its linked entrance. The Menar image shows one bird observation, not a full species checklist. The hero shows a bird recorded in Udaipur, not a promised sighting at any card’s map pin.
 
@@ -73,7 +74,7 @@ Barlow Condensed and DM Sans are self-hosted through Fontsource under the SIL Op
 
 ## Image optimization
 
-All nine photographs (eight cards and the hero) use WebP source files. Original uploads/downloads are archived under `originals/`, outside the deploy output. Card crops are prepared at a 1.6:1 ratio using their chosen focal points, so unused portrait pixels are not downloaded. The hero keeps its full composition. No source is enlarged; Astro generates responsive WebP variants, with eager loading for the hero and lazy loading for cards. Hashed `/_astro/` assets get one-year immutable browser caching through `public/_headers`.
+All ten photographs (nine cards and the hero) use WebP source files. Original uploads/downloads are archived under `originals/`, outside the deploy output. Card crops are prepared at a 1.6:1 ratio using their chosen focal points, so unused portrait pixels are not downloaded. The hero keeps its full composition. No source is enlarged; Astro generates responsive WebP variants, with eager loading for the hero and lazy loading for cards. Hashed `/_astro/` assets get one-year immutable browser caching through `public/_headers`.
 
 Regenerate the active WebP files from the archived originals:
 
@@ -81,7 +82,7 @@ Regenerate the active WebP files from the archived originals:
 npm run images:optimize
 ```
 
-The script uses quality 82 and a maximum card width of 960px. The nine active source files total 712,836 bytes, down from 1,993,408 bytes in the originals (64% smaller). These are source totals, not a measured page-load improvement. Astro’s responsive delivery sizes vary by viewport. Set `IMAGE_REPORT_PATH` to write the JSON conversion report to a chosen path.
+The script uses quality 82 and a maximum card width of 960px. The ten active source files total 729,532 bytes, down from 2,274,296 bytes in the originals (68% smaller). These are source totals, not a measured page-load improvement. Astro’s responsive delivery sizes vary by viewport. Set `IMAGE_REPORT_PATH` to write the JSON conversion report to a chosen path.
 
 ## Cloudflare deployment
 
