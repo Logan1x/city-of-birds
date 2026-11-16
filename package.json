@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev --host 0.0.0.0",
-    "build": "astro check && astro build",
+    "build": "npm run observations:refresh && astro check && astro build",
     "preview": "astro preview --host 0.0.0.0",
-    "test": "playwright test",
+    "test": "npm run test:observations && playwright test",
     "images:optimize": "node scripts/optimize-images.mjs",
+    "observations:refresh": "node scripts/fetch-observations.mjs",
+    "test:observations": "node --test tests/observations.test.mjs",
     "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {

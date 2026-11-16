@@ -8,7 +8,7 @@ import '../styles/global.css';
 import Icon from '../components/Icon.astro';
 import SpotCard from '../components/SpotCard.astro';
 import sunbird from '../assets/sunbird.webp';
-import { spots, heroPhoto, checkedLabel } from '../data/spots';
+import { spots, heroPhoto } from '../data/spots';
 
 const canonical = Astro.site ? new URL('/', Astro.site) : undefined;
 const basics = [
@@ -25,14 +25,14 @@ const basics = [
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
     <meta name="theme-color" content="#5549DE" />
     <meta name="color-scheme" content="light" />
-    <meta name="description" content="A little guide to birdwatching in Udaipur and nearby. Find lakes, parks, and Menar’s wetlands, read visiting notes, and open each location in Google Maps." />
-    <title>City of Birds — Your Udaipur birding guide</title>
+    <meta name="description" content="Birding spots shared by City of Birds members in Udaipur and nearby. A handy starting point for new members planning a morning out." />
+    <title>City of Birds — Our community’s birding spots</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     {canonical && <link rel="canonical" href={canonical} />}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_IN" />
-    <meta property="og:title" content="City of Birds — Your Udaipur birding guide" />
-    <meta property="og:description" content="Find your next birding morning in Udaipur. Lakeside walks, leafy corners, and a little help getting there." />
+    <meta property="og:title" content="City of Birds — Our community’s birding spots" />
+    <meta property="og:description" content="New to the group? Find birding spots around Udaipur shared by fellow City of Birds members." />
     {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:image" content={Astro.site ? new URL('/social-card.png', Astro.site) : '/social-card.png'} />
     <meta property="og:image:width" content="1200" />
@@ -46,7 +46,7 @@ const basics = [
       <div class="site-header container">
         <a class="brand" href="/">
           <span class="brand-mark"><Icon name="bird" size={33} /></span>
-          <span class="brand-name">City of Birds<span class="brand-descriptor">An Udaipur birding guide</span></span>
+          <span class="brand-name">City of Birds<span class="brand-descriptor">Our community’s birding spots</span></span>
         </a>
         <nav aria-label="Main navigation">
           <a href="#explore">Explore spots</a>
@@ -60,9 +60,9 @@ const basics = [
           <div class="hero-copy">
             <p class="hero-location"><Icon name="pin" size={17} /> Udaipur, Rajasthan</p>
             <h1 id="hero-title">Find your next<br class="desktop-break" /> birding morning<br class="desktop-break" /> in Udaipur.</h1>
-            <p class="hero-description">Discover lakeside walks and quiet corners for watching birds in Udaipur and nearby.</p>
+            <p class="hero-description">New to City of Birds? These are birding spots around Udaipur shared by fellow members. Pick a place for your next morning out.</p>
             <a class="button button-pink pressable" href="#explore">Explore birding spots <Icon name="arrow" size={23} /></a>
-            <p class="hero-footnote"><Icon name="binoculars" size={18} /> A little curiosity is all you need to start.</p>
+            <p class="hero-footnote"><Icon name="binoculars" size={18} /> Not sure where to start? Ask in the group.</p>
           </div>
           <figure class="hero-figure">
             <div class="photo-frame">
@@ -76,7 +76,7 @@ const basics = [
 
     <section class="explore-section container" id="explore" aria-labelledby="explore-title">
       <div class="section-intro">
-        <div><h2 id="explore-title">A good morning starts here.</h2><p>Pick a spot. Take your time. See who shows up.</p></div>
+        <div><h2 id="explore-title">Spots shared by our members.</h2><p>Choose somewhere nearby, or ask the group about a spot you haven’t visited yet.</p></div>
         <span class="local-note"><Icon name="pin" size={17} /> Udaipur & nearby</span>
       </div>
       <div class="discovery-controls" id="discovery-controls" hidden>
@@ -95,7 +95,7 @@ const basics = [
         <p>Try another name or area, or show all the spots again.</p>
         <button type="button" class="button button-indigo pressable" id="clear-filters">Clear filters</button>
       </div>
-      <p class="explore-note"><Icon name="sun" size={18} /><span>Check current access and opening hours before you go. Birds move around; sightings are never guaranteed.</span></p>
+      <p class="explore-note"><Icon name="sun" size={18} /><span>Ask in the group for recent sightings or updates before heading out. Give birds space and keep to the paths.</span></p>
     </section>
 
     <section class="basics-section" id="basics" aria-labelledby="basics-title">
@@ -107,19 +107,19 @@ const basics = [
 
     </main>
     <footer class="site-footer container">
-      <div class="footer-top"><a class="brand footer-brand" href="/"><span class="brand-mark"><Icon name="bird" size={30} /></span><span class="brand-name">City of Birds<span class="brand-descriptor">An Udaipur birding guide</span></span></a><p>See you by the lake.</p><a class="back-top" href="#main">Back to top <span aria-hidden="true">↑</span></a></div>
-      <div class="footer-bottom"><p>An independent guide, not a tour operator.<br />Sources checked {checkedLabel}; access can change.</p><a href="#credits">Sources & photo credits <Icon name="plus" size={15} /></a></div>
+      <div class="footer-top"><a class="brand footer-brand" href="/"><span class="brand-mark"><Icon name="bird" size={30} /></span><span class="brand-name">City of Birds<span class="brand-descriptor">Our community’s birding spots</span></span></a><p>See you by the lake.</p><a class="back-top" href="#main">Back to top <span aria-hidden="true">↑</span></a></div>
+      <div class="footer-bottom"><p>Shared by City of Birds members.<br />For our group’s next birding morning.</p><a href="#credits" aria-controls="credits">About our group & photo credits <Icon name="plus" size={15} /></a></div>
       <details class="credits" id="credits">
-        <summary>About this guide & photography</summary>
+        <summary>About these spots & photography</summary>
         <div class="credits-body">
-          <p>This is a starting collection for Udaipur and nearby, including Menar outside the city. Location information comes from user-shared Google Maps pins, Rajasthan Tourism, and linked local records. The five user-suggested additions do not yet have verified species checklists. Community identifications and access information may change. “Sources checked” means an online review, not an on-site inspection. More details on each card includes the evidence and access caveats.</p>
-          <p>The five shared Maps links were resolved to their named place pins; these are not verified entrances. Fateh Sagar links to the Pal, Pichola to Gangaur Ghat, and Gulab Bagh to its Main Road approach; the garden’s specific entrance still needs a local check. Google Maps may open its app or website depending on your device.</p>
+          <p>These spots were shared and visited by members of our City of Birds community in Udaipur. We’ve gathered them here to help new members find places to go birding, including Menar outside the city.</p>
+          <p>Bird notes come from local observations. For recent sightings, help identifying a bird, or advice on your first visit, ask fellow members in the group.</p>
           <ul>
             <li><a href={heroPhoto.url} target="_blank" rel="noopener noreferrer">Purple sunbird by {heroPhoto.author}</a>, <a href={heroPhoto.licenseUrl} target="_blank" rel="noopener noreferrer">{heroPhoto.license}</a>.</li>
             {spots.map(spot => spot.photo && <li><a href={spot.photo.url} target="_blank" rel="noopener noreferrer">{spot.photo.label} by {spot.photo.author}</a>, <a href={spot.photo.licenseUrl} target="_blank" rel="noopener noreferrer">{spot.photo.license}</a>.</li>)}
             {spots.map(spot => spot.photoNote && <li>{spot.name}: {spot.photoNote}</li>)}
           </ul>
-          <p>Photographs are resized, compressed, and cropped for layout under their linked licenses. ShareAlike applies where specified. Photos show the named lake or garden, not necessarily the exact map pin; Menar’s photo documents a bird observation at the lake. Cards without a location photo use labelled original illustrations, not stock photos of another place. Fonts: Barlow Condensed and DM Sans, under the SIL Open Font License. No photographer or source organisation endorses this guide.</p>
+          <p>Photographs are resized and cropped for display. Please respect the linked photo licences; ShareAlike applies where specified. Menar’s photo shows a spoonbill observed at the lake. Fonts: Barlow Condensed and DM Sans, under the SIL Open Font License.</p>
         </div>
       </details>
     </footer>

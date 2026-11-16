@@ -119,7 +119,21 @@ summary::-webkit-details-marker { display: none; }
 .details-body ul { padding-left: 17px; margin-block: 8px 16px; }
 .details-body li + li { margin-top: 7px; }
 .details-body a { color: var(--indigo-deep); }
-.photo-credit, .checked-date { font-size: 0.65rem; color: var(--muted); }
+.photo-credit { font-size: 0.65rem; color: var(--muted); }
+.nearby-observations { margin-block: 6px 20px; }
+.nearby-observations .observation-context, .observation-status { color: var(--muted); font-size: .66rem; }
+.details-body .observation-list { list-style: none; padding: 0; margin-block: 14px; display: grid; gap: 14px; }
+.details-body .observation-list > li { margin: 0; min-width: 0; }
+.observation-link { display: flex; align-items: center; gap: 10px; min-height: 56px; text-decoration: none; border-radius: 8px; }
+.observation-link:hover strong { text-decoration: underline; text-underline-offset: 3px; }
+.observation-photo { flex: 0 0 56px; width: 56px; height: 56px; object-fit: cover; border-radius: 8px; outline: 1px solid rgba(0,0,0,.1); outline-offset: -1px; }
+.observation-photo-placeholder { display: grid; place-items: center; flex: 0 0 56px; height: 56px; border-radius: 8px; background: var(--lavender); color: var(--indigo-deep); }
+.observation-copy { display: grid; gap: 3px; min-width: 0; }
+.observation-copy strong { font-size: .75rem; font-weight: 600; line-height: 1.4; }
+.observation-copy > span { color: var(--muted); font-size: .65rem; line-height: 1.5; }
+.observation-copy time { font-variant-numeric: tabular-nums; }
+.observation-credit { font-size: .59rem; color: var(--muted); line-height: 1.5; margin-top: 5px; }
+.observation-search { display: inline-flex; align-items: center; min-height: 44px; font-size: .7rem; }
 .explore-note { display: flex; align-items: flex-start; gap: 9px; margin-top: 25px; color: var(--muted); font-size: 0.7rem; line-height: 1.7; max-width: 780px; }
 .explore-note svg { margin-top: 2px; color: var(--indigo); }
 .empty-state { text-align: center; padding: 60px 20px; background: var(--white); border-radius: 24px; color: var(--indigo); }

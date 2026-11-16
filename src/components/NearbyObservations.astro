@@ -1,0 +1,30 @@
+---
+import { nearbyObservations } from '../data/observations';
+import Icon from './Icon.astro';
+
+interface Props { spotId: string; center?: string }
+const { spotId, center } = Astro.props;
+const nearby = nearbyObservations(spotId, center);
+const qualityLabels = { research: 'Research grade', needs_id: 'Needs ID', casual: 'Casual' };
+const dateLabel = (date: string) => new Intl.DateTimeFormat('en-IN', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(date));
+---
+<section class="nearby-observations" aria-labelledby={`${spotId}-observations-title`} data-status={nearby.status}>
+  <h4 id={`${spotId}-observations-title`}>Observed nearby</h4>
+  {nearby.status === 'missing-coordinates' ? <p>Nearby observations will be added once this spot’s search point is set.</p> : <>
+    <p class="observation-context">{nearby.curated ? `Selected by our members${center ? ' · within 1 km' : ''} · iNaturalist` : 'Within 1 km · iNaturalist · all identification grades'}</p>
+    {nearby.status === 'cached' && <p class="observation-status">Showing saved observations while iNaturalist is unavailable.</p>}
+    {nearby.observations.length > 0 ? <>
+      <ul class="observation-list">
+        {nearby.observations.map(observation => <li>
+          <a class="observation-link" href={observation.url} target="_blank" rel="noopener noreferrer">
+            {observation.photo ? <img class="observation-photo" src={observation.photo.src} alt="" width="56" height="56" loading="lazy" decoding="async" /> : <span class="observation-photo-placeholder" aria-hidden="true"><Icon name="bird" size={25} /></span>}
+            <span class="observation-copy"><strong>{observation.name}</strong><span><time datetime={observation.observedOn}>{dateLabel(observation.observedOn)}</time> · {observation.observer}</span><span class="observation-quality" data-grade={observation.qualityGrade}>{qualityLabels[observation.qualityGrade]}</span><span class="sr-only">View observation on iNaturalist (opens a new tab)</span></span>
+          </a>
+          {observation.photo ? <p class="observation-credit">{observation.photo.attribution} · <a href={observation.photo.licenseUrl} target="_blank" rel="noopener noreferrer">{observation.photo.license}<span class="sr-only"> (opens a new tab)</span></a></p> : <p class="observation-credit">View photo on the linked iNaturalist record.</p>}
+        </li>)}
+      </ul>
+      <p class="observation-context">Identifications may change, especially for Needs ID and casual records. Dates are sighting dates; nearby records may be outside this spot. Photo thumbnails are resized and cropped.</p>
+    </> : <p>{nearby.status === 'unavailable' ? 'iNaturalist observations aren’t available right now.' : 'No matching photo observations within 1 km yet. Ask the group about recent sightings.'}</p>}
+    {nearby.searchUrl && <a class="observation-search" href={nearby.searchUrl} target="_blank" rel="noopener noreferrer">Browse this 1 km area on iNaturalist<span class="sr-only"> (opens a new tab)</span> ↗</a>}
+  </>}
+</section>

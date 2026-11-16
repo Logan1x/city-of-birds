@@ -1,0 +1,438 @@
+{
+  "policyVersion": 3,
+  "radiusKm": 1,
+  "limit": 3,
+  "spots": {
+    "jungle-safari-park": {
+      "center": "24.5626744,73.6653277",
+      "selectionKey": "latest",
+      "status": "ready",
+      "fetchedAt": "2026-11-16T07:30:42.221Z",
+      "observations": [
+        {
+          "id": 404354482,
+          "name": "Indian Robin",
+          "scientificName": "Copsychus fulicatus",
+          "observedOn": "2026-09-27",
+          "qualityGrade": "research",
+          "observer": "Abani Satpathy",
+          "url": "https://www.inaturalist.org/observations/404354482",
+          "photo": {
+            "id": 742555595,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/742555595/small.jpg",
+            "attribution": "(c) Abani Satpathy, some rights reserved (CC BY-NC)",
+            "license": "CC BY-NC 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+            "src": "/observations/742555595.webp"
+          }
+        },
+        {
+          "id": 404353914,
+          "name": "Laughing Dove",
+          "scientificName": "Spilopelia senegalensis",
+          "observedOn": "2026-09-27",
+          "qualityGrade": "research",
+          "observer": "Abani Satpathy",
+          "url": "https://www.inaturalist.org/observations/404353914",
+          "photo": {
+            "id": 742554396,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/742554396/small.jpg",
+            "attribution": "(c) Abani Satpathy, some rights reserved (CC BY-NC)",
+            "license": "CC BY-NC 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+            "src": "/observations/742554396.webp"
+          }
+        },
+        {
+          "id": 404350476,
+          "name": "Asian Green Bee-eater",
+          "scientificName": "Merops orientalis",
+          "observedOn": "2026-09-27",
+          "qualityGrade": "research",
+          "observer": "Abani Satpathy",
+          "url": "https://www.inaturalist.org/observations/404350476",
+          "photo": {
+            "id": 742547677,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/742547677/small.jpg",
+            "attribution": "(c) Abani Satpathy, some rights reserved (CC BY-NC)",
+            "license": "CC BY-NC 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+            "src": "/observations/742547677.webp"
+          }
+        }
+      ]
+    },
+    "udaan-park": {
+      "center": "24.5901086,73.6836062",
+      "selectionKey": "214460528,369120265,369120277",
+      "status": "ready",
+      "fetchedAt": "2026-11-16T07:30:43.658Z",
+      "observations": [
+        {
+          "id": 214460528,
+          "name": "Gray-headed Swamphen",
+          "scientificName": "Porphyrio poliocephalus",
+          "observedOn": "2024-03-11",
+          "qualityGrade": "research",
+          "observer": "Benoît Segerer",
+          "url": "https://www.inaturalist.org/observations/214460528",
+          "photo": {
+            "id": 379057603,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/379057603/small.jpeg",
+            "attribution": "(c) Benoît Segerer, some rights reserved (CC BY-NC)",
+            "license": "CC BY-NC 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+            "src": "/observations/379057603.webp"
+          }
+        },
+        {
+          "id": 369120265,
+          "name": "Bronze-winged Jacana",
+          "scientificName": "Metopidius indicus",
+          "observedOn": "2014-01-03",
+          "qualityGrade": "research",
+          "observer": "Ryan O'Donnell",
+          "url": "https://www.inaturalist.org/observations/369120265",
+          "photo": null
+        },
+        {
+          "id": 369120277,
+          "name": "Pied Kingfisher",
+          "scientificName": "Ceryle rudis",
+          "observedOn": "2014-01-03",
+          "qualityGrade": "research",
+          "observer": "Ryan O'Donnell",
+          "url": "https://www.inaturalist.org/observations/369120277",
+          "photo": null
+        }
+      ]
+    },
+    "menar-wetland": {
+      "center": "24.5931707,74.113049",
+      "selectionKey": "latest",
+      "status": "ready",
+      "fetchedAt": "2026-11-16T07:30:45.930Z",
+      "observations": [
+        {
+          "id": 262805121,
+          "name": "Little Grebe",
+          "scientificName": "Tachybaptus ruficollis",
+          "observedOn": "2025-02-23",
+          "qualityGrade": "research",
+          "observer": "Mathieu Soetens",
+          "url": "https://www.inaturalist.org/observations/262805121",
+          "photo": {
+            "id": 472005025,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/472005025/small.jpeg",
+            "attribution": "(c) Mathieu Soetens, some rights reserved (CC BY)",
+            "license": "CC BY 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+            "src": "/observations/472005025.webp"
+          }
+        },
+        {
+          "id": 262805074,
+          "name": "Little Cormorant",
+          "scientificName": "Microcarbo niger",
+          "observedOn": "2025-02-23",
+          "qualityGrade": "research",
+          "observer": "Mathieu Soetens",
+          "url": "https://www.inaturalist.org/observations/262805074",
+          "photo": {
+            "id": 472004956,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/472004956/small.jpeg",
+            "attribution": "(c) Mathieu Soetens, some rights reserved (CC BY)",
+            "license": "CC BY 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+            "src": "/observations/472004956.webp"
+          }
+        },
+        {
+          "id": 262805063,
+          "name": "Small Pratincole",
+          "scientificName": "Glareola lactea",
+          "observedOn": "2025-02-23",
+          "qualityGrade": "research",
+          "observer": "Mathieu Soetens",
+          "url": "https://www.inaturalist.org/observations/262805063",
+          "photo": {
+            "id": 472004938,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/472004938/small.jpeg",
+            "attribution": "(c) Mathieu Soetens, some rights reserved (CC BY)",
+            "license": "CC BY 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+            "src": "/observations/472004938.webp"
+          }
+        }
+      ]
+    },
+    "nela-talab": {
+      "center": "24.5361875,73.6995469",
+      "selectionKey": "latest",
+      "status": "ready",
+      "fetchedAt": "2026-11-16T07:30:47.543Z",
+      "observations": [
+        {
+          "id": 228098945,
+          "name": "Bank Myna",
+          "scientificName": "Acridotheres ginginianus",
+          "observedOn": "2023-03-19",
+          "qualityGrade": "research",
+          "observer": "leonid63",
+          "url": "https://www.inaturalist.org/observations/228098945",
+          "photo": {
+            "id": 404730968,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/404730968/small.jpg",
+            "attribution": "(c) leonid63, some rights reserved (CC BY-NC)",
+            "license": "CC BY-NC 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+            "src": "/observations/404730968.webp"
+          }
+        }
+      ]
+    },
+    "jogi-talab": {
+      "center": "24.5076586,73.6969969",
+      "selectionKey": "latest",
+      "status": "ready",
+      "fetchedAt": "2026-11-16T07:30:48.967Z",
+      "observations": []
+    },
+    "fateh-sagar": {
+      "center": "24.6012962,73.6796795",
+      "selectionKey": "latest",
+      "status": "ready",
+      "fetchedAt": "2026-11-16T07:30:51.770Z",
+      "observations": [
+        {
+          "id": 412925177,
+          "name": "Black-winged Stilt",
+          "scientificName": "Himantopus himantopus",
+          "observedOn": "2026-11-04",
+          "qualityGrade": "research",
+          "observer": "Khushal Sharma",
+          "url": "https://www.inaturalist.org/observations/412925177",
+          "photo": {
+            "id": 759895588,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/759895588/small.jpg",
+            "attribution": "(c) Khushal Sharma, some rights reserved (CC BY)",
+            "license": "CC BY 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+            "src": "/observations/759895588.webp"
+          }
+        },
+        {
+          "id": 412925035,
+          "name": "White-throated Kingfisher (Indian)",
+          "scientificName": "Halcyon smyrnensis fusca",
+          "observedOn": "2026-11-04",
+          "qualityGrade": "research",
+          "observer": "Khushal Sharma",
+          "url": "https://www.inaturalist.org/observations/412925035",
+          "photo": {
+            "id": 759895337,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/759895337/small.jpg",
+            "attribution": "(c) Khushal Sharma, some rights reserved (CC BY)",
+            "license": "CC BY 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+            "src": "/observations/759895337.webp"
+          }
+        },
+        {
+          "id": 411924277,
+          "name": "Little Cormorant",
+          "scientificName": "Microcarbo niger",
+          "observedOn": "2026-10-31",
+          "qualityGrade": "research",
+          "observer": "Khushal Sharma",
+          "url": "https://www.inaturalist.org/observations/411924277",
+          "photo": {
+            "id": 757866085,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/757866085/small.jpg",
+            "attribution": "(c) Khushal Sharma, some rights reserved (CC BY)",
+            "license": "CC BY 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+            "src": "/observations/757866085.webp"
+          }
+        }
+      ]
+    },
+    "pichola": {
+      "center": "24.5799237,73.6819255",
+      "selectionKey": "latest",
+      "status": "ready",
+      "fetchedAt": "2026-11-16T07:30:54.414Z",
+      "observations": [
+        {
+          "id": 413920861,
+          "name": "Bank Myna",
+          "scientificName": "Acridotheres ginginianus",
+          "observedOn": "2026-11-01",
+          "qualityGrade": "research",
+          "observer": "Everett Roth",
+          "url": "https://www.inaturalist.org/observations/413920861",
+          "photo": {
+            "id": 761899322,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/761899322/small.jpg",
+            "attribution": "(c) Everett Roth, some rights reserved (CC BY-NC)",
+            "license": "CC BY-NC 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+            "src": "/observations/761899322.webp"
+          }
+        },
+        {
+          "id": 411909173,
+          "name": "Greater Coucal",
+          "scientificName": "Centropus sinensis",
+          "observedOn": "2026-10-30",
+          "qualityGrade": "research",
+          "observer": "vardhman jain",
+          "url": "https://www.inaturalist.org/observations/411909173",
+          "photo": {
+            "id": 757837673,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/757837673/small.jpg",
+            "attribution": "(c) vardhman jain, some rights reserved (CC BY-NC)",
+            "license": "CC BY-NC 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+            "src": "/observations/757837673.webp"
+          }
+        },
+        {
+          "id": 410718668,
+          "name": "Black Kite",
+          "scientificName": "Milvus migrans",
+          "observedOn": "2026-10-08",
+          "qualityGrade": "research",
+          "observer": "Chris Chris",
+          "url": "https://www.inaturalist.org/observations/410718668",
+          "photo": {
+            "id": 755434781,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/755434781/small.jpg",
+            "attribution": "(c) Chris Chris, some rights reserved (CC BY-NC)",
+            "license": "CC BY-NC 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+            "src": "/observations/755434781.webp"
+          }
+        }
+      ]
+    },
+    "gulab-bagh": {
+      "center": "24.5702922,73.6902424",
+      "selectionKey": "latest",
+      "status": "ready",
+      "fetchedAt": "2026-11-16T07:30:56.854Z",
+      "observations": [
+        {
+          "id": 411909173,
+          "name": "Greater Coucal",
+          "scientificName": "Centropus sinensis",
+          "observedOn": "2026-10-30",
+          "qualityGrade": "research",
+          "observer": "vardhman jain",
+          "url": "https://www.inaturalist.org/observations/411909173",
+          "photo": {
+            "id": 757837673,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/757837673/small.jpg",
+            "attribution": "(c) vardhman jain, some rights reserved (CC BY-NC)",
+            "license": "CC BY-NC 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+            "src": "/observations/757837673.webp"
+          }
+        },
+        {
+          "id": 407189457,
+          "name": "Jungle Babbler",
+          "scientificName": "Argya striata",
+          "observedOn": "2026-10-10",
+          "qualityGrade": "research",
+          "observer": "vardhman jain",
+          "url": "https://www.inaturalist.org/observations/407189457",
+          "photo": {
+            "id": 748238348,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/748238348/small.jpg",
+            "attribution": "(c) vardhman jain, some rights reserved (CC BY-NC)",
+            "license": "CC BY-NC 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+            "src": "/observations/748238348.webp"
+          }
+        },
+        {
+          "id": 410718668,
+          "name": "Black Kite",
+          "scientificName": "Milvus migrans",
+          "observedOn": "2026-10-08",
+          "qualityGrade": "research",
+          "observer": "Chris Chris",
+          "url": "https://www.inaturalist.org/observations/410718668",
+          "photo": {
+            "id": 755434781,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/755434781/small.jpg",
+            "attribution": "(c) Chris Chris, some rights reserved (CC BY-NC)",
+            "license": "CC BY-NC 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+            "src": "/observations/755434781.webp"
+          }
+        }
+      ]
+    },
+    "roop-sagar": {
+      "center": null,
+      "selectionKey": "298008472,297980147,297841259",
+      "status": "ready",
+      "fetchedAt": "2026-11-16T07:30:58.925Z",
+      "observations": [
+        {
+          "id": 298008472,
+          "name": "Rosy Starling",
+          "scientificName": "Pastor roseus",
+          "observedOn": "2023-03-31",
+          "qualityGrade": "research",
+          "observer": "Mridul Vaibhav",
+          "url": "https://www.inaturalist.org/observations/298008472",
+          "photo": {
+            "id": 536749113,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/536749113/small.jpg",
+            "attribution": "(c) Mridul Vaibhav, some rights reserved (CC BY-NC)",
+            "license": "CC BY-NC 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+            "src": "/observations/536749113.webp"
+          }
+        },
+        {
+          "id": 297980147,
+          "name": "Osprey",
+          "scientificName": "Pandion haliaetus",
+          "observedOn": "2022-12-06",
+          "qualityGrade": "research",
+          "observer": "Mridul Vaibhav",
+          "url": "https://www.inaturalist.org/observations/297980147",
+          "photo": {
+            "id": 536692829,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/536692829/small.jpg",
+            "attribution": "(c) Mridul Vaibhav, some rights reserved (CC BY-NC)",
+            "license": "CC BY-NC 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+            "src": "/observations/536692829.webp"
+          }
+        },
+        {
+          "id": 297841259,
+          "name": "Grey Heron",
+          "scientificName": "Ardea cinerea",
+          "observedOn": "2023-09-15",
+          "qualityGrade": "research",
+          "observer": "Mridul Vaibhav",
+          "url": "https://www.inaturalist.org/observations/297841259",
+          "photo": {
+            "id": 536433838,
+            "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/536433838/small.jpg",
+            "attribution": "(c) Mridul Vaibhav, some rights reserved (CC BY-NC)",
+            "license": "CC BY-NC 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+            "src": "/observations/536433838.webp"
+          }
+        }
+      ]
+    }
+  }
+}

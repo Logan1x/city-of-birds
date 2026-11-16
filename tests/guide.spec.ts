@@ -52,6 +52,13 @@ test('shows nine spots and functional map destinations', async ({ page }) => {
   await expect(page.locator('[data-spot] .visit-meta')).toHaveCount(0);
   await expect(page.locator('#spot-grid')).not.toContainText('Suggested time');
   await expect(page.locator('#spot-grid')).not.toContainText('Suggested season');
+  await expect(page.locator('.hero-description')).toContainText('New to City of Birds?');
+  await expect(page.locator('.footer-bottom')).toContainText('Shared by City of Birds members.');
+  await expect(page.locator('body')).not.toContainText('Sources checked');
+  await expect(page.locator('body')).not.toContainText('not a tour operator');
+  await expect(page.locator('body')).not.toContainText('Rajasthan Tourism');
+  await expect(page.locator('body')).not.toContainText('not been verified');
+  await expect(page.locator('[data-spot] .checked-date')).toHaveCount(0);
 });
 
 test('combines filters and case-insensitive trimmed search; clear restores all', async ({ page }) => {
@@ -86,7 +93,29 @@ test('deep links reveal hidden spots and open credits', async ({ page }) => {
   await page.evaluate(() => { location.hash = 'fateh-sagar'; });
   await expect(page.locator('#fateh-sagar')).toBeVisible();
   await page.locator('.footer-bottom a').click();
+  await expect(page).toHaveURL(/#credits$/);
   await expect(page.locator('#credits')).toHaveAttribute('open', '');
+});
+
+test('footer credits link reopens a closed current hash by pointer and keyboard', async ({ page }) => {
+  await page.goto('/#credits');
+  const credits = page.locator('#credits');
+  const summary = credits.locator('summary');
+  const link = page.getByRole('link', { name: 'About our group & photo credits', exact: true });
+  await expect(credits).toHaveAttribute('open', '');
+  await summary.click();
+  await expect(credits).not.toHaveAttribute('open', '');
+  await expect(link).toHaveAttribute('aria-expanded', 'false');
+  await link.click();
+  await expect(credits).toHaveAttribute('open', '');
+  await expect(link).toHaveAttribute('aria-expanded', 'true');
+  await expect(summary).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(credits).not.toHaveAttribute('open', '');
+  await link.focus();
+  await page.keyboard.press('Enter');
+  await expect(credits).toHaveAttribute('open', '');
+  await expect(summary).toBeFocused();
 });
 
 test('has no horizontal overflow, missing photos, or browser errors', async ({ page }) => {
@@ -95,18 +124,18 @@ test('has no horizontal overflow, missing photos, or browser errors', async ({ p
   await page.reload();
   await page.evaluate(() => document.fonts.ready);
   // Visit each lazy image; jumping straight to the footer can skip its load range.
-  for (const image of await page.locator('img').all()) {
+  for (const image of await page.locator('img:not(.observation-photo)').all()) {
     await image.scrollIntoViewIfNeeded();
     await expect.poll(() => image.evaluate(element => element instanceof HTMLImageElement && element.complete && element.naturalWidth > 0)).toBe(true);
   }
-  await expect.poll(() => page.locator('img').evaluateAll(images => images.every(image => image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0))).toBe(true);
+  await expect.poll(() => page.locator('img:not(.observation-photo)').evaluateAll(images => images.every(image => image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0))).toBe(true);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   expect(errors).toEqual([]);
 });
 
 test('serves all ten photographs as actual WebP images', async ({ page }) => {
-  await expect(page.locator('img')).toHaveCount(10);
-  for (const image of await page.locator('img').all()) {
+  await expect(page.locator('img:not(.observation-photo)')).toHaveCount(10);
+  for (const image of await page.locator('img:not(.observation-photo)').all()) {
     await image.scrollIntoViewIfNeeded();
     await image.evaluate(element => (element as HTMLImageElement).decode());
     const url = await image.evaluate(element => (element as HTMLImageElement).currentSrc);
@@ -117,6 +146,84 @@ test('serves all ten photographs as actual WebP images', async ({ page }) => {
     expect(bytes.toString('ascii', 0, 4)).toBe('RIFF');
     expect(bytes.toString('ascii', 8, 12)).toBe('WEBP');
   }
+});
+
+test('shows up to three nearby observations inside each disclosure with fixed-radius links and photo credits', async ({ page }) => {
+  const externalRequests: string[] = [];
+  page.on('request', request => {
+    if (new URL(request.url()).origin !== new URL(page.url()).origin) externalRequests.push(request.url());
+  });
+  await page.reload();
+  await expect(page.locator('.nearby-observations')).toHaveCount(9);
+  for (const card of await page.locator('[data-spot]').all()) {
+    await card.locator('summary').click();
+    await expect(card.getByRole('heading', { name: 'Observed nearby', exact: true })).toBeVisible();
+    expect(await card.locator('.observation-list li').count()).toBeLessThanOrEqual(3);
+    if (await card.getAttribute('id') === 'roop-sagar') {
+      await expect(card.locator('.observation-context').first()).toHaveText('Selected by our members · iNaturalist');
+      await expect(card.locator('.observation-search')).toHaveCount(0);
+    } else {
+      const url = new URL((await card.locator('.observation-search').getAttribute('href'))!);
+      expect(url.origin).toBe('https://www.inaturalist.org');
+      expect(url.searchParams.get('radius')).toBe('1');
+      expect(url.searchParams.get('taxon_id')).toBe('3');
+      expect(url.searchParams.has('quality_grade')).toBe(false);
+      expect(url.searchParams.get('photo_license')).toContain('cc-by-nc');
+    }
+    const dates = [];
+    for (const row of await card.locator('.observation-list li').all()) {
+      await expect(row.locator('.observation-link')).toHaveAttribute('href', /^https:\/\/www\.inaturalist\.org\/observations\/\d+$/);
+      await expect(row.locator('.observation-link')).toHaveAttribute('target', '_blank');
+      await expect(row.locator('.observation-credit')).not.toBeEmpty();
+      await expect(row.locator('.observation-quality')).toHaveText(/^(Research grade|Needs ID|Casual)$/);
+      const gradeLabels: Record<string, string> = { research: 'Research grade', needs_id: 'Needs ID', casual: 'Casual' };
+      const grade = await row.locator('.observation-quality').getAttribute('data-grade');
+      expect(grade).not.toBeNull();
+      await expect(row.locator('.observation-quality')).toHaveText(gradeLabels[grade!]);
+      const image = row.locator('img');
+      if (await image.count()) {
+        await expect(row.locator('.observation-credit a')).toHaveAttribute('href', /^https:\/\/creativecommons\.org\//);
+        await image.scrollIntoViewIfNeeded();
+        await image.evaluate(element => (element as HTMLImageElement).decode());
+        await expect(image).toHaveAttribute('src', /^\/observations\/\d+\.webp$/);
+      } else {
+        await expect(row.locator('.observation-photo-placeholder')).toHaveCount(1);
+        await expect(row.locator('.observation-credit')).toHaveText('View photo on the linked iNaturalist record.');
+      }
+      dates.push(await row.locator('time').getAttribute('datetime'));
+    }
+    if (!['udaan-park', 'roop-sagar'].includes((await card.getAttribute('id'))!)) expect(dates).toEqual([...dates].sort().reverse());
+  }
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  expect(externalRequests).toEqual([]);
+});
+
+test('Udaan Park preserves the three member-selected records without copying restricted photos', async ({ page }) => {
+  const card = page.locator('#udaan-park');
+  await card.locator('summary').click();
+  await expect(card.locator('.observation-context').first()).toContainText('Selected by our members');
+  await expect(card.locator('.observation-link').first()).toHaveAttribute('target', '_blank');
+  expect(await card.locator('.observation-link').evaluateAll(links => links.map(link => link.getAttribute('href')))).toEqual([
+    'https://www.inaturalist.org/observations/214460528',
+    'https://www.inaturalist.org/observations/369120265',
+    'https://www.inaturalist.org/observations/369120277',
+  ]);
+  await expect(card.locator('.observation-photo')).toHaveCount(1);
+  await expect(card.locator('.observation-photo-placeholder')).toHaveCount(2);
+});
+
+test('Roop Sagar uses its three member-selected photo records without a guessed radius or changing its Maps link', async ({ page }) => {
+  const card = page.locator('#roop-sagar');
+  await card.locator('summary').click();
+  expect(await card.locator('.observation-link').evaluateAll(links => links.map(link => link.getAttribute('href')))).toEqual([
+    'https://www.inaturalist.org/observations/298008472',
+    'https://www.inaturalist.org/observations/297980147',
+    'https://www.inaturalist.org/observations/297841259',
+  ]);
+  await expect(card.locator('.observation-photo')).toHaveCount(3);
+  await expect(card.locator('.nearby-observations')).not.toContainText('1 km');
+  await expect(card.locator('.observation-search')).toHaveCount(0);
+  await expect(card.locator('.map-button')).toHaveAttribute('href', 'https://maps.app.goo.gl/ZnQGr5wXia8hKuvT8');
 });
 
 test('passes WCAG AA accessibility checks including expanded notes', async ({ page }) => {

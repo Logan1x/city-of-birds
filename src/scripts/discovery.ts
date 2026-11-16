@@ -60,6 +60,26 @@ if (controls && search && count && empty && clear && cards.length) {
   revealHashTarget();
 }
 
+// Clicking an already-current hash does not fire hashchange. Open the credits
+// explicitly so the footer link also works after their disclosure is closed.
+const credits = document.querySelector<HTMLDetailsElement>('#credits');
+const creditsLink = document.querySelector<HTMLAnchorElement>('.footer-bottom a[href="#credits"]');
+if (credits && creditsLink) {
+  const syncCreditsState = () => creditsLink.setAttribute('aria-expanded', String(credits.open));
+  syncCreditsState();
+  credits.addEventListener('toggle', syncCreditsState);
+  creditsLink.addEventListener('click', event => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    // Native fragment navigation would take focus back from the summary.
+    event.preventDefault();
+    if (window.location.hash !== '#credits') window.history.pushState(null, '', '#credits');
+    credits.open = true;
+    syncCreditsState();
+    credits.querySelector('summary')?.focus({ preventScroll: true });
+    credits.scrollIntoView({ block: 'start' });
+  });
+}
+
 // Pointer-only press feedback: keyboard actions remain instant and motion-free.
 for (const element of document.querySelectorAll<HTMLElement>('.pressable:not([data-static])')) {
   element.addEventListener('pointerdown', event => {

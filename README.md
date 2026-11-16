@@ -37,6 +37,8 @@ Cards remain readable, expandable, and linked to Maps without JavaScript. Search
 
 ## Content status
 
+This site is for the local City of Birds community, especially new members looking for places to go birding. Members supplied and visited the locations, as confirmed by the owner. Write for fellow group members, not tourists or a general travel audience. Do not restore source-check dates, tour-operator disclaimers, or claims that locations have not been visited. Keep practical safety advice, the Sunday closure, and photo attribution/licences. Bird notes are based on local observations; Rajasthan Tourism is not a source for the group’s information.
+
 The collection has nine spots: Roop Sagar, Jungle Safari Park, Udaan Park, Menar Wetland Complex, Nela Talab, Jogi Talab, Fateh Sagar, Lake Pichola, and Gulab Bagh. Roop Sagar uses the owner-shared Google Maps URL directly: the redirect could not be reached during this update, so no coordinates or inspected entrance are asserted. Its owner-supplied photo shows the lake framed by a palm tree and brick wall; the original photographer and reuse licence were not specified. The earlier five additions retain their original shared URLs in their sources; their coordinates come from the resolved place marker (`!3d` / `!4d`), not the map viewport center. Menar is explicitly labelled as outside Udaipur city.
 
 Menar has a CC BY photograph of a spoonbill recorded at Menar Lake, credited to Mathieu Soetens. Udaan Park uses the portrait photo supplied by the user in chat (originally JPEG despite the attachment’s `.png` name); its original photographer and reuse licence were not specified, so no CC licence is asserted. Original files are preserved in `originals/`; active images are cropped and optimized WebP copies in `src/assets/`.
@@ -47,9 +49,9 @@ Nela Talab uses the user-supplied portrait photo of its lakeside promenade, rail
 
 Jogi Talab uses the user-supplied square image of palm trees reflected in the lake; the original photographer and reuse licence were not specified. All nine spot cards have location photos.
 
-The five additions do not have verified species checklists or entrance inspections; the cards say so. The original three cards cite community observations covering the broader habitat, not guaranteed sightings at their pins. Suggested-time and season rows were removed from every card at the user’s request. The Sunday closure is a compact photo badge, not a separate row.
+No species lists have been invented for the member-supplied additions. The original three cards retain linked local bird observations. Card notes direct new members to the group for recent sightings and help with visits. Suggested-time and season rows were removed from every card at the user’s request. The Sunday closure is a compact photo badge, not a separate row.
 
-The Fateh Sagar pin is the Pal promenade; Pichola opens Gangaur Ghat. **Gulab Bagh currently opens the Main Road approach, not a verified entrance gate.** Check its current public gate locally and update the coordinates before a public launch. Online listings and sources were reviewed on 15 November 2026; no field inspection has been performed. Do not describe these pins as on-site verified.
+Fateh Sagar opens the Pal promenade; Pichola opens Gangaur Ghat; Gulab Bagh opens its Main Road approach. The copy update does not change these destinations. The owner confirmed that members know and have visited the locations; the website no longer presents them as uninspected suggestions.
 
 Do not add sensitive nesting coordinates, captive birds as wild sightings, unverified access hours, or further distant destinations without checking scope. The user explicitly expanded scope to Menar with the five shared pins. Review photo permissions separately from the observation record’s license.
 
@@ -84,7 +86,25 @@ npm run images:optimize
 
 The script uses quality 82 and a maximum card width of 960px. The ten active source files total 729,532 bytes, down from 2,274,296 bytes in the originals (68% smaller). These are source totals, not a measured page-load improvement. Astro’s responsive delivery sizes vary by viewport. Set `IMAGE_REPORT_PATH` to write the JSON conversion report to a chosen path.
 
-## Cloudflare deployment
+## Nearby iNaturalist observations
+
+“Observed nearby” lives inside each card’s **More details** section. It shows up to three recent matching bird observations within **1 km** of that spot’s search centre, newest sighting date first. These are nearby records, not a species checklist or a promise of sightings at the spot itself. Different observations may show the same species, and neighbouring spots can share records where their search circles overlap.
+
+Member-selected exceptions live in `src/data/observation-selections.json`. Udaan Park uses IDs `214460528`, `369120265`, and `369120277`, in that order, instead of automatic recent results. These selections survive refreshes and keep their original sighting dates (including the two 2014 records), not a misleading recent label. They still pass the 1 km, wild-bird and privacy checks. A selected record without a reusable photo is shown as text plus its iNaturalist link: the Jacana and Pied Kingfisher photos are all rights reserved and are not copied; the Swamphen photo is CC BY-NC. Missing/rejected selected IDs are not filled with unrelated automatic results. Cache selection keys also invalidate saved data when the selected IDs or their order change.
+
+Roop Sagar uses the member-selected records `298008472` (Rosy Starling), `297980147` (Osprey), and `297841259` (Grey Heron), in that order. All three observation photos are CC BY-NC, credited to Mridul Vaibhav. Their original sighting dates are retained. The records pass public-location, wild-bird, sensitivity and photo checks, but there is no radius claim for Roop Sagar because its search centre has not been set. Observation coordinates are not substituted for the spot’s centre or Maps destination.
+
+`src/data/spot-coordinates.json` is shared by map destinations and automatic observation queries. Roop Sagar keeps the supplied Maps short link, which could not be resolved; it can show explicit member selections without a search centre, but has no automatic radius search or “within 1 km” label. Add confirmed spot coordinates when available before enabling its radius search.
+
+`npm run build` refreshes observations before the Astro build. Run `npm run observations:refresh` on its own to update the local preview. There are no browser-side API requests or API keys. The deployment stays a static snapshot until the next build/deploy, not a live feed. Requests use the public [iNaturalist API](https://api.inaturalist.org/v1/docs/) with `taxon_id=3`, `radius=1`, wild observations, photos, and open geoprivacy. At the user’s request, there is no research-grade restriction: research-grade, Needs ID, and casual records are eligible, with their status displayed on every row. These are community identifications, not equally certain records. The script checks up to the 30 newest matching API records, locally validates distances and excludes obscured/private records, threatened taxa, captive birds, and reported accuracy worse than 1 km. Missing positional accuracy can still occur, so the radius refers to recorded locations, not guaranteed GPS precision. It does not publish observation coordinates.
+
+Observation photos may use CC0, CC BY, CC BY-SA, CC BY-NC, or CC BY-NC-SA licences. The user approved noncommercial CC photos for this noncommercial community guide. All-rights-reserved and no-derivatives photos remain excluded, since the thumbnails are cropped. Noncommercial and ShareAlike conditions still apply to those images; revisit this policy before introducing commercial use. Never substitute taxon reference photos for observation photos. The script downloads small variants and creates local 112px WebP thumbnails under `public/observations/`; each row includes the original photo attribution, licence link, observer, observation date, and iNaturalist record link. Public observer credits are not a claim that the observer belongs to our group.
+
+`src/data/observations.json` is the saved, normalized snapshot. API errors keep a matching saved collection for at most seven days, with a visible saved-data note. A changed centre, mismatched filtering-policy version/radius/limit, missing thumbnails, or older cache produces an unavailable state. Empty successful results stay empty; the radius is never widened. A thumbnail failure skips that candidate and tries the next matching record. API calls are sequential and spaced below iNaturalist’s requested 60/minute.
+
+Keep the snapshot and referenced thumbnails with the source so clean checkouts can build during short API outages. The refresh script removes generated numeric-ID WebP thumbnails no longer referenced by the new snapshot, so old photos are not published indefinitely. `npm test` runs the deterministic selection/cache tests and desktop/mobile UI tests; `npm run test:observations` runs just the data tests.
+
+## Cloudflare deployment workflow
 
 Public URL: https://city-of-birds.khushal20210-t1kxhglw.workers.dev
 
