@@ -60,24 +60,30 @@ if (controls && search && count && empty && clear && cards.length) {
   revealHashTarget();
 }
 
-// Clicking an already-current hash does not fire hashchange. Open the credits
-// explicitly so the footer link also works after their disclosure is closed.
-const credits = document.querySelector<HTMLDetailsElement>('#credits');
-const creditsLink = document.querySelector<HTMLAnchorElement>('.footer-bottom a[href="#credits"]');
-if (credits && creditsLink) {
-  const syncCreditsState = () => creditsLink.setAttribute('aria-expanded', String(credits.open));
-  syncCreditsState();
-  credits.addEventListener('toggle', syncCreditsState);
-  creditsLink.addEventListener('click', event => {
-    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    // Native fragment navigation would take focus back from the summary.
-    event.preventDefault();
-    if (window.location.hash !== '#credits') window.history.pushState(null, '', '#credits');
-    credits.open = true;
-    syncCreditsState();
-    credits.querySelector('summary')?.focus({ preventScroll: true });
-    credits.scrollIntoView({ block: 'start' });
-  });
+// One disclosure control. Without JavaScript the content and its anchor remain
+// available; enhancement replaces that anchor with a native toggle button.
+const credits = document.querySelector<HTMLElement>('#credits');
+const creditsToggle = document.querySelector<HTMLButtonElement>('#credits-toggle');
+const creditsFallback = document.querySelector<HTMLAnchorElement>('#credits-fallback');
+if (credits && creditsToggle && creditsFallback) {
+  const setCreditsExpanded = (expanded: boolean) => {
+    credits.hidden = !expanded;
+    creditsToggle.setAttribute('aria-expanded', String(expanded));
+  };
+  const hasCreditsHash = () => {
+    try { return decodeURIComponent(window.location.hash.slice(1)) === 'credits'; } catch { return false; }
+  };
+  const revealCreditsFromHash = () => {
+    if (!hasCreditsHash()) return;
+    setCreditsExpanded(true);
+    credits.scrollIntoView({ block: 'nearest' });
+  };
+  setCreditsExpanded(hasCreditsHash());
+  creditsFallback.hidden = true;
+  creditsToggle.hidden = false;
+  creditsToggle.addEventListener('click', () => setCreditsExpanded(credits.hidden));
+  window.addEventListener('hashchange', revealCreditsFromHash);
+  window.addEventListener('pageshow', revealCreditsFromHash);
 }
 
 // Pointer-only press feedback: keyboard actions remain instant and motion-free.

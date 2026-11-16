@@ -92,30 +92,40 @@ test('deep links reveal hidden spots and open credits', async ({ page }) => {
   await expect(page.locator('#fateh-sagar')).toBeHidden();
   await page.evaluate(() => { location.hash = 'fateh-sagar'; });
   await expect(page.locator('#fateh-sagar')).toBeVisible();
-  await page.locator('.footer-bottom a').click();
+  await page.evaluate(() => { location.hash = 'credits'; });
   await expect(page).toHaveURL(/#credits$/);
-  await expect(page.locator('#credits')).toHaveAttribute('open', '');
+  await expect(page.locator('#credits')).toBeVisible();
+  await expect(page.locator('#credits-toggle')).toHaveAttribute('aria-expanded', 'true');
 });
 
-test('footer credits link reopens a closed current hash by pointer and keyboard', async ({ page }) => {
-  await page.goto('/#credits');
+test('one footer credits button toggles content and plus/minus icons by pointer and keyboard', async ({ page }) => {
   const credits = page.locator('#credits');
-  const summary = credits.locator('summary');
-  const link = page.getByRole('link', { name: 'About our group & photo credits', exact: true });
-  await expect(credits).toHaveAttribute('open', '');
-  await summary.click();
-  await expect(credits).not.toHaveAttribute('open', '');
-  await expect(link).toHaveAttribute('aria-expanded', 'false');
-  await link.click();
-  await expect(credits).toHaveAttribute('open', '');
-  await expect(link).toHaveAttribute('aria-expanded', 'true');
-  await expect(summary).toBeFocused();
+  const button = page.getByRole('button', { name: 'About our group & photo credits', exact: true });
+  await expect(button).toHaveCount(1);
+  await expect(credits.locator('summary')).toHaveCount(0);
+  await expect(page.locator('#credits-fallback')).toBeHidden();
+  await expect(credits).toBeHidden();
+  await expect(button).toHaveAttribute('aria-expanded', 'false');
+  await expect(button.locator('.credits-plus')).toBeVisible();
+  await expect(button.locator('.credits-minus')).toBeHidden();
+  await button.click();
+  await expect(credits).toBeVisible();
+  await expect(button).toHaveAttribute('aria-expanded', 'true');
+  await expect(button.locator('.credits-plus')).toBeHidden();
+  await expect(button.locator('.credits-minus')).toBeVisible();
+  await expect(button).toBeFocused();
+  await button.click();
+  await expect(credits).toBeHidden();
+  await expect(button.locator('.credits-plus')).toBeVisible();
+  await expect(button.locator('.credits-minus')).toBeHidden();
+  await page.goto('/#credits');
+  await expect(credits).toBeVisible();
+  await button.focus();
   await page.keyboard.press('Enter');
-  await expect(credits).not.toHaveAttribute('open', '');
-  await link.focus();
-  await page.keyboard.press('Enter');
-  await expect(credits).toHaveAttribute('open', '');
-  await expect(summary).toBeFocused();
+  await expect(credits).toBeHidden();
+  await page.keyboard.press('Space');
+  await expect(credits).toBeVisible();
+  await expect(button).toBeFocused();
 });
 
 test('has no horizontal overflow, missing photos, or browser errors', async ({ page }) => {
@@ -228,7 +238,7 @@ test('Roop Sagar uses its three member-selected photo records without a guessed 
 
 test('passes WCAG AA accessibility checks including expanded notes', async ({ page }) => {
   for (const summary of await page.locator('article summary').all()) await summary.click();
-  await page.locator('#credits summary').click();
+  await page.locator('#credits-toggle').click();
   const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
   expect(results.violations).toEqual([]);
 });
@@ -242,6 +252,11 @@ test('retains the full useful guide with JavaScript disabled', async ({ browser,
   await page.locator('#pichola summary').click();
   await expect(page.locator('#pichola details')).toHaveAttribute('open', '');
   await expect(page.locator('#pichola .map-button')).toBeVisible();
+  await expect(page.locator('#credits-toggle')).toBeHidden();
+  await expect(page.locator('#credits-fallback')).toBeVisible();
+  await page.locator('#credits-fallback').click();
+  await expect(page.locator('#credits')).toBeVisible();
+  await expect(page.locator('#credits summary')).toHaveCount(0);
   await context.close();
 });
 

@@ -108,9 +108,12 @@ const basics = [
     </main>
     <footer class="site-footer container">
       <div class="footer-top"><a class="brand footer-brand" href="/"><span class="brand-mark"><Icon name="bird" size={30} /></span><span class="brand-name">City of Birds<span class="brand-descriptor">Our community’s birding spots</span></span></a><p>See you by the lake.</p><a class="back-top" href="#main">Back to top <span aria-hidden="true">↑</span></a></div>
-      <div class="footer-bottom"><p>Shared by City of Birds members.<br />For our group’s next birding morning.</p><a href="#credits" aria-controls="credits">About our group & photo credits <Icon name="plus" size={15} /></a></div>
-      <details class="credits" id="credits">
-        <summary>About these spots & photography</summary>
+      <div class="footer-bottom">
+        <p>Shared by City of Birds members.<br />For our group’s next birding morning.</p>
+        <a href="#credits" id="credits-fallback">About our group & photo credits</a>
+        <button type="button" class="credits-toggle" id="credits-toggle" aria-controls="credits" aria-expanded="false" hidden>About our group & photo credits <Icon name="plus" size={15} class="credits-plus" /><Icon name="minus" size={15} class="credits-minus" /></button>
+      </div>
+      <section class="credits" id="credits" aria-label="About our group and photo credits">
         <div class="credits-body">
           <p>These spots were shared and visited by members of our City of Birds community in Udaipur. We’ve gathered them here to help new members find places to go birding, including Menar outside the city.</p>
           <p>Bird notes come from local observations. For recent sightings, help identifying a bird, or advice on your first visit, ask fellow members in the group.</p>
@@ -121,7 +124,7 @@ const basics = [
           </ul>
           <p>Photographs are resized and cropped for display. Please respect the linked photo licences; ShareAlike applies where specified. Menar’s photo shows a spoonbill observed at the lake. Fonts: Barlow Condensed and DM Sans, under the SIL Open Font License.</p>
         </div>
-      </details>
+      </section>
     </footer>
     <script src="../scripts/discovery.ts"></script>
   </body>
